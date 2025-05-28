@@ -1,0 +1,127 @@
+/* Reset + border-box */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Root variables for easy tweaks */
+:root {
+  --gap: 1rem;             /* основной отступ */
+  --radius: 8px;           /* скругление */
+  --color-bg: #f7f7f7;     /* цвет страницы */
+  --font-main: 'Montserrat', Arial, sans-serif;
+
+  /* Цвета секций */
+  --chicken-bg: #ffe9d6;
+  --beef-bg: #ffe3ec;
+  --sushi-bg: #e2f1ff;
+
+  /* Цвета бейджей */
+  --chicken-title: #d46f00;
+  --beef-title: #c2185b;
+  --sushi-title: #1976d2;
+}
+
+html { font-size: 16px; }
+
+body {
+  font-family: var(--font-main);
+  background: var(--color-bg);
+  color: #222;
+  line-height: 1.6;
+}
+
+/* ----- Header & Footer ----- */
+.site-header,
+.site-footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.site-footer {
+  border-top: 1px solid #ddd;
+  border-bottom: none;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.site-header h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* ----- Layout wrapper ----- */
+.wrapper {
+  width: 100%;
+  padding: var(--gap);
+  overflow: hidden; /* для clearfix, если float */
+}
+
+/* ----- Section cards ----- */
+.item {
+  float: left; /* соответствуем подсказке задания */
+  width: 100%; /* мобильный по умолчанию */
+  margin: var(--gap);
+  padding: calc(var(--gap) * 3) var(--gap) var(--gap); /* сверху больше для бейджа */
+  border: 1px solid #000;
+  border-radius: var(--radius);
+  position: relative;
+  background: #fff; /* будет переопределён индивидуально */
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover effect (добавляет «красоты» и интерактива) */
+.item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+}
+
+/* Бейдж заголовка */
+.section-title {
+  position: absolute;
+  top: -1px;   /* перекрываем рамку секции */
+  right: -1px;
+  padding: 0.35rem 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  border: 1px solid #000;
+  border-top-right-radius: calc(var(--radius) - 1px);
+  border-bottom-left-radius: var(--radius);
+  background: #333; /* переопределяем ниже */
+  white-space: nowrap;
+  font-size: 0.875rem;
+}
+
+/* Индивидуальные цвета */
+.item-chicken { background: var(--chicken-bg); }
+.item-beef    { background: var(--beef-bg); }
+.item-sushi   { background: var(--sushi-bg); }
+
+.item-chicken .section-title { background: var(--chicken-title); }
+.item-beef    .section-title { background: var(--beef-title); }
+.item-sushi   .section-title { background: var(--sushi-title); }
+
+/* ----- Breakpoints ----- */
+
+/* ≥992px — три колонки */
+@media (min-width: 992px) {
+  .item { width: calc(33.333% - 2 * var(--gap)); }
+}
+
+/* 768–991px — две + одна */
+@media (min-width: 768px) and (max-width: 991px) {
+  .item { width: calc(50% - 2 * var(--gap)); }
+  .item:nth-child(3) { width: calc(100% - 2 * var(--gap)); }
+}
+
+/* ≤767px — одна колонка (ширина уже 100%) */
+@media (max-width: 767px) {
+  .item { width: calc(100% - 2 * var(--gap)); }
+}
